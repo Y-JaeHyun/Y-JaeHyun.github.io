@@ -29,12 +29,12 @@ category: Experiences
 * 성능 저하 요소 분석 및 개선 진행
 * 메모리 사용량 최적화
 * Unit Test 도입 검토 지원
-* 제품 Technical Guide / User Gide 작성 지원
+* 제품 Technical Guide / User Guide 작성 지원
   
   
 ## 성과
 
-* IPS 40G 제품군 NTT Docomo Poc 통과 및 납품
+* IPS 40G 제품군 NTT Docomo PoC 통과 및 납품
 * 사내 CI 포르세스 개선 및 품질 향상
 * 성능 시험 케이스 표준화
   
