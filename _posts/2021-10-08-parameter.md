@@ -1,8 +1,8 @@
 ---
 layout:     post
 author:     bcnote3314
-title:  성능을 올리기 위한 삽질 기록 (정리중)
-subtitle: OS 환경 변수
+title: OS 환경 변수
+subtitle:  성능을 올리기 위한 삽질 기록 (정리중)
 category: Note
 tags: 		OS Experiences
 ---
