@@ -74,16 +74,46 @@ CPU의 전력 전원 옵션(C-State)를 사용하지 않도록 한다.
 
 참고사항 : 뒤에 설명할 Hyper Thread관련 옵션들과 영향이 있다. 각자의 시스템 환경에 따라 다른 영향이 있을수 있으니 반드시 시험과정이 필요하다.  
 
+## Hyper Thread
+
+CPU 스펙을 보면 4코어 4스레드, 4코어 8스레드 등의 표현을 쓴다.  
+여기서 코어란 진짜 물리적인 반도체이다.  
+스레드는 OS에서 인지하는 논리적인 Core 개수이다. (프로그래밍 관점의 스레드와는 당연히 다른의미다.)  
+
+OS에서는 스레드의 개수를 실제 물리적인 코어 개수인것처럼 인식하여 동작을 하게 된다. 이를 구현한 기술이 하이퍼 스레딩이며 병렬처리를 위한 것이다.  
+단순하게 설명을 보면 무조건적으로 하이퍼 스레드 옵션을 사용하는 것이 좋을 것으로 보인다.  
+
+하지만 상황에 따라 오히려 성능을 저하시키는 요인이 될수도 있다.  
+예를들어 내가 시험했던 환경에서는 idle=poll 과 Hyper Thread가 동시에 사용되면서 성능이 저하되는 현상이 있었다.  
+
+논리적으로 구분되더라도 결국 하나의 물리 프로세서를 사용하기 위하여 싸우기 될 것이며 idle polling 처리 과정에서 두개의 스레드가 경쟁하면서 발생하는 문제였다.  
+
+코어를 ON/OFF 시키기 위해서는 아래 명령어를 통해 가능하다.  
+
+0번 코어 활성화 or 비활성화
+echo 1 > /sys/devices/system/cpu/cpu0/online
+echo 0 > /sys/devices/system/cpu/cpu0/online
 
 
-## Hyper Thread, Sibling Core 
+# tuned
 
+tuned는 프로파일설정을 통해 운영체제가 특정 작업에서 나은성능을 발휘할수 있도록 제공되는 데몬이다.  
+이미 정의된 프로파일들이 몇가지 존재하며 사용자가 새로 정의하여 사용할 수도 있다.  
+
+기본으로 정의된 프로파일은 아래와 같다.  
+
+1. throughput-performance : 처리량 개선에 중점을 두었으며 대부분의 기본 설정되어있다.  
+2. latency-performance : latency를 낮추는데 중점을 두었다.  
+3. network-latency : 네트워크 대기시간 단축에 중점을 두었다.  
+4. network-throughput 네트워크 처리량에 중점을 두었다.  
+5. virtual-guest : 가상 머신 성능 최적화에 중점을 두었다.  
+6. virtual-host : 가상 호스트에서 성능 최적화에 중점을 두었다.
+
+각 프로파일 설정에따라 위에서 봤던 절전 관련 옵션이나 기타 커널의 환경 설정들을 셋팅하며 상황에 따라 또 다른 설정을 통해 본인의 환경에서 가장 좋은 결과를 도출해 내면된다.  
+
+내 경우에는 무조건적으로 latency가 중요했기 때문에 latency-performance와 network-latency 프로파일에서 설정하는 옵션들을 수정해 가면서 최적의 조건을 맞추려고 했었다. 
 
 ## numa_balance
-
 ## transparent_hugepage
-
-## sched_migration_cost_ns, sched_nr_migrate
-
-# tund
+## sched_migration_cost_ns, sched_nr_migrate  
 
