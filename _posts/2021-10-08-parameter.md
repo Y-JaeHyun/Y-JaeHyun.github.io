@@ -111,9 +111,45 @@ tuned는 프로파일설정을 통해 운영체제가 특정 작업에서 나은
 
 각 프로파일 설정에따라 위에서 봤던 절전 관련 옵션이나 기타 커널의 환경 설정들을 셋팅하며 상황에 따라 또 다른 설정을 통해 본인의 환경에서 가장 좋은 결과를 도출해 내면된다.  
 
-내 경우에는 무조건적으로 latency가 중요했기 때문에 latency-performance와 network-latency 프로파일에서 설정하는 옵션들을 수정해 가면서 최적의 조건을 맞추려고 했었다. 
+내 경우에는 무조건적으로 latency가 중요했기 때문에 latency-performance와 network-latency 프로파일에서 설정하는 옵션들을 수정해 가면서 최적의 조건을 맞추려고 했었다.  
 
 ## numa_balance
-## transparent_hugepage
-## sched_migration_cost_ns, sched_nr_migrate  
+
+[NUMA](https://bcnote3314.github.io/note/2021/09/13/numa/) 에 대해서는 메모리 관련 성능 저하 포인트를 분석하면서 본적이 있다.  
+NUMA 구조에서는 당연히 자신의 Local Memory 사용하는 것이 성능적인 이득이 있으며 Remote Memory 접근 과정에서는 높은 latency가 발생한다.  
+
+numa_balance 옵션은 remote에 존재하는 메모리를 커널단에서 자동으로 local로 이동시켜주는 옵션이다.  
+
+하지만 tuned에서 network-latency 프로파일에서는 numa_balance를 disable 시킨다.  
+의도하지 않은 메모리 이동과정에서 발생하는 지연시간을 없애기 위한 의도로 보인다.  
+
+이 옵션은 disable로 바꾸고 성능상 중요한 메모리 접근은 대부분 지역변수 내에서 처리하거나 TLS변수로 변환하는 등의 작업을 통해 더 좋은 효과를 볼수 있었다.  
+
+## transparent_hugepage  
+
+이 옵션은 [TLB](https://bcnote3314.github.io/note/2021/10/04/TLB/) 연관이 있는 옵션이다.  
+Linux 환경에서는 메모리에 대한 관리를 Page단위로 처리하며 Page는 기본적으로 4K의 크기를 가진다.  
+하지만 메모리 크기가 늘어나게 되면서 데이터 처리를 위해 확인해야하는 Page의 개수도 늘어나게 된다.  
+Page개수가 많아지면 자연스럽게 TLB내에 공간이 부족해지고 TLB Cache Miss 발생 빈도가 늘어나며 성능의 저하가 발생한다.  
+
+이를 해결하기 위한 방법은 Page의 크기를 늘려셔 하나의 Page에 더많은 데이터가 들어가면 TLB에 사용되는 Page 개수를 줄일 수 있다.  
+그것이 Huge Page이다.  
+
+HugePage는 커널 파라미터에 지정하여 재부팅하거나 관련 설정들을 해줘야 하는데 이를 자동으로 관리 하기 위한 옵션이 Transparent Huge Pages (THP)이다.  
+
+하지만 THP의 기존 의도와는 다르게 시스템 성능 저하를 유발하는 경우가 많아 Redis, MongoDB, Oracle 등 다수의 Database 관련 시스템에서는 해당 옵션은 Disable을 권장한다.  
+
+
+## sched_migration_cost_ns, sched_nr_migrate   
+
+해당 옵션들도 영향은 성능상 약간의 차이는 보였다.  
+하지만 아직 이해는 잘 안된다...
+
+이 두가지 말고도 kernel단에 설정하는 옵션들이 다수 있다.
+CPU의 스케쥴링에 관련된 옵션들로 보이기 때문에 분명 인지하고 있어야 하는 옵션들임에는 틀림없다..
+
+
+[kernel 관련 옵션 설명](https://doc.opensuse.org/documentation/leap/archive/42.1/tuning/html/book.sle.tuning/cha.tuning.taskscheduler.html)
+
+
 
