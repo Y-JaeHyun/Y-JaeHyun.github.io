@@ -1,7 +1,7 @@
 # Site settings
 title: My Study Room
 description: "Yoo's 개인 블로그"
-url: "https://bcnote3314.github.io"
+url: "https://Y-JaeHyun.github.io"
 
 
 
@@ -13,8 +13,8 @@ headercolor: "#FFFFFF"
 logo: /img/logos/study.png
 
 # Tertiary Parameters
-github_username:  bcnote3314
-project_repository: bcnote3314.github.io
+github_username:  Y-JaeHyun
+project_repository: Y-JaeHyun.github.io
 disqus_shortname: bcnote3314-1
 #g-analytics: UA-75881392-1
 #altmetric: true
