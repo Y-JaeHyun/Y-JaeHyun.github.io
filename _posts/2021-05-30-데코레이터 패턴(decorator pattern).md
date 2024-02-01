@@ -72,4 +72,4 @@ Python 에는 데코레이터 페턴을 미리 구현해둔 예약어가 있다.
 '@'로 사용 가능하며 관련 내용은 아래 링크에서 사용방법등이 확인 가능하다. 
 
 
-[Python Decorator](https://bcnote3314.github.io/note/2021/05/30/Python-Decorator/)
+[Python Decorator](https://y-jaehyun.github.io/note/2021/05/30/Python-Decorator/)

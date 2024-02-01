@@ -82,6 +82,6 @@ EVM은 글로벌 싱글톤으로 전세계에 걸친 단일 인스턴스 컴퓨�
 
 이전에 이미 비슷한 포스팅을 했기 때문에 해당 부분은 패스
 
-[클레이튼 IDE](https://bcnote3314.github.io/block/2019/07/07/Klaytn-Application-%EB%A7%8C%EB%93%A4%EA%B8%B04/)
+[클레이튼 IDE](https://y-jaehyun.github.io/block/2019/07/07/Klaytn-Application-%EB%A7%8C%EB%93%A4%EA%B8%B04/)
 
 

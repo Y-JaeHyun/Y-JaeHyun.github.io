@@ -115,7 +115,7 @@ tuned는 프로파일설정을 통해 운영체제가 특정 작업에서 나은
 
 ## numa_balance
 
-[NUMA](https://bcnote3314.github.io/note/2021/09/13/numa/) 에 대해서는 메모리 관련 성능 저하 포인트를 분석하면서 본적이 있다.  
+[NUMA](https://y-jaehyun.github.io/note/2021/09/13/numa/) 에 대해서는 메모리 관련 성능 저하 포인트를 분석하면서 본적이 있다.  
 NUMA 구조에서는 당연히 자신의 Local Memory 사용하는 것이 성능적인 이득이 있으며 Remote Memory 접근 과정에서는 높은 latency가 발생한다.  
 
 numa_balance 옵션은 remote에 존재하는 메모리를 커널단에서 자동으로 local로 이동시켜주는 옵션이다.  
@@ -127,7 +127,7 @@ numa_balance 옵션은 remote에 존재하는 메모리를 커널단에서 자�
 
 ## transparent_hugepage  
 
-이 옵션은 [TLB](https://bcnote3314.github.io/note/2021/10/04/TLB/) 연관이 있는 옵션이다.  
+이 옵션은 [TLB](https://y-jaehyun.github.io/note/2021/10/04/TLB/) 연관이 있는 옵션이다.  
 Linux 환경에서는 메모리에 대한 관리를 Page단위로 처리하며 Page는 기본적으로 4K의 크기를 가진다.  
 하지만 메모리 크기가 늘어나게 되면서 데이터 처리를 위해 확인해야하는 Page의 개수도 늘어나게 된다.  
 Page개수가 많아지면 자연스럽게 TLB내에 공간이 부족해지고 TLB Cache Miss 발생 빈도가 늘어나며 성능의 저하가 발생한다.  
